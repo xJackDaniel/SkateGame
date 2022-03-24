@@ -15,6 +15,12 @@ def main():
     # Set up background image
     img = pygame.image.load("images/backgrounds/background.png")
     img = pygame.transform.scale(img, (WINDOW_WIDTH, WINDOW_HEIGHT))
+    # Display the background, presented Image, likes, comments, tags and
+    # location(on the Image)
+    screen.blit(img, (0, 0))
+
+    # Display the ground
+    pygame.draw.rect(screen, GROUND_COLOR, pygame.Rect(GROUND_X, GROUND_Y, GROUND_WIDTH, GROUND_HEIGHT))
 
 
     running = True
@@ -26,9 +32,6 @@ def main():
                 running = False
 
 
-        # Display the background, presented Image, likes, comments, tags and
-        # location(on the Image)
-        screen.blit(img, (0, 0))
         # Update the screen
         pygame.display.flip()
         # Update display - without input update everything
