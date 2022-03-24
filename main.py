@@ -22,6 +22,10 @@ def main():
     # Display the ground
     pygame.draw.rect(screen, GROUND_COLOR, pygame.Rect(GROUND_X, GROUND_Y, GROUND_WIDTH, GROUND_HEIGHT))
 
+    #display the character
+    character_img = pygame.image.load("images/Characters/Character1.png")
+    character_img = pygame.transform.scale(character_img, (CHARACTER_WIDTH, CHARACTER_HEIGHT))
+    screen.blit(character_img, (CHARACTER_X_POS, CHARACTER_Y_POS))
 
     running = True
     while running:
