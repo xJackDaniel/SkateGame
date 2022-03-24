@@ -1,6 +1,7 @@
 import pygame
 from constants import *
 from helpers import screen
+from classes.Player import *
 
 
 def main():
@@ -24,9 +25,8 @@ def main():
 
     # display the character
 
-    character_img = pygame.image.load("images/Characters/Character1.png")
-    character_img = pygame.transform.scale(character_img, (CHARACTER_WIDTH, CHARACTER_HEIGHT))
-    screen.blit(character_img, (CHARACTER_X_POS, CHARACTER_Y_POS))
+    player = Player(3, "images/Characters/Character1.png", 0, 0)
+    player.display_player()
 
     running = True
     while running:
