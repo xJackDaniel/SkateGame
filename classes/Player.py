@@ -8,7 +8,8 @@ class Player:
         self.skin = skin
         self.best_score = best_score
         self.current_score = current_score
-
+        self.down = False
+        self.character_img = pygame.image.load("images/Characters/Character1.png")
 
     def get_hearts(self):
         return self.hearts
@@ -29,6 +30,11 @@ class Player:
         pass
 
     def display_player(self):
-        character_img = pygame.image.load("images/Characters/Character1.png")
-        character_img = pygame.transform.scale(character_img, (CHARACTER_WIDTH, CHARACTER_HEIGHT))
-        screen.blit(character_img, (CHARACTER_X_POS, CHARACTER_Y_POS))
+        self.character_img = pygame.transform.scale(self.character_img, (CHARACTER_WIDTH, CHARACTER_HEIGHT))
+        screen.blit(self.character_img, (CHARACTER_X_POS, CHARACTER_Y_POS))
+
+    def get_down(self):
+        self.character_img = pygame.transform.scale(self.character_img, (CHARACTER_WIDTH, CHARACTER_HEIGHT-60))
+        screen.blit(self.character_img, (CHARACTER_X_POS, CHARACTER_Y_POS+60))
+
+

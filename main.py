@@ -36,6 +36,13 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
+            pressed = pygame.key.get_pressed()
+            if pressed[pygame.K_DOWN]:
+                if not player.down:
+                    player.get_down()
+            else:
+                if player.down:
+                    player.display_player()
 
         # Update the screen
         pygame.display.flip()
