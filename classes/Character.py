@@ -6,16 +6,21 @@ class Character:
         self.name = name
 
     def get_id(self):
+        """Returns the id of the character"""
         return self.id
 
     def get_price(self):
+        """Returns the price for the character"""
         return self.price
 
     def get_iamge_url(self):
-        return self.get_iamge
+        """Returns the image_url of the character"""
+        return self.image
 
     def get_name(self):
+        """Returns the name of the character"""
         return self.name
 
     def is_own(self):
+        """Return True/False if the player owns this character."""
         pass
