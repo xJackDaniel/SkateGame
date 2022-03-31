@@ -2,6 +2,7 @@ import pygame
 from constants import *
 from helpers import screen
 from classes.Player import *
+from classes.Bar import *
 from screen_classes.Button import *
 
 
