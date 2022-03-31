@@ -40,7 +40,7 @@ def main():
 
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_DOWN]:
-                if not player.down:
+                if not player.down and player.jump is False:
                     player.get_down()
             elif player.down:
                 player.reset_player()
@@ -48,7 +48,7 @@ def main():
             if player.jump is False and pressed[pygame.K_SPACE]:
                 player.jump = True
 
-        if player.jump is True:
+        if player.jump is True and player.down is False:
             player.player_jump()
 
 
