@@ -14,6 +14,8 @@ class Player:
         self.y = CHARACTER_Y_POS
         self.x = CHARACTER_X_POS
         self.character_img = pygame.image.load("images/Characters/Character1.png")
+        self.jump_count = JUMP_COUNT
+
 
     def get_hearts(self):
         """Returns the amount of hearts left to the user"""
@@ -60,6 +62,14 @@ class Player:
         self.y = CHARACTER_Y_POS + 60
         self.down = True
 
+    def player_jump(self):
+        """ The character jumping over"""
+        if self.jump_count >= -10:
+            self.y -= (self.jump_count * abs(self.jump_count)) * 0.5
+            self.jump_count -= 1
+        else:
+            self.jump_count = 10
+            self.jump = False
 
 
 
