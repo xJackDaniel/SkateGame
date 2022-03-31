@@ -3,13 +3,16 @@ from constants import*
 from helpers import*
 
 class Button:
-    def __init__(self, style, screen, text, id):
+    def __init__(self, style, screen, text, id, x, y, width, height):
         self.style = style
         self.screen = screen
         self.text = text
         self.id = id
-        self.pause_img = pygame.image.load("images/buttons/Pause.png")
-        self.heart_img = pygame.image.load("images/backgrounds/Heart.png")
+        self.x =x
+        self.y = y
+        self.width = width
+        self.height = height
+
 
 
     def get_style(self):
@@ -29,10 +32,8 @@ class Button:
         return self.id
 
     def display_button(self):
-        self.pause_img = pygame.transform.scale(self.pause_img, (PAUSE_WIDTH, PAUSE_HEIGHT))
-        screen.blit(self.pause_img, (PAUSE_X_POS, PAUSE_Y_POS))
+        self.style = pygame.transform.scale(self.style, (self.width, self.height))
+        screen.blit(self.style, (self.x, self.y))
 
-    def display_heart(self):
-        self.heart_img = pygame.transform.scale(self.heart_img, (HEART_WIDTH, HEART_HEIGHT))
-        screen.blit(self.heart_img, (HEART_X_POS_1, HEART_Y_POS))
+
 

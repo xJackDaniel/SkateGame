@@ -23,14 +23,11 @@ def main():
     player = Player(3, "images/Characters/Character1.png", 0, 0)
 
     #display pause button
-    pause = Button("images/buttons/Pause.png", None, None, "PAUSE")
+    pause = Button(pygame.image.load("images/buttons/Pause.png"), None, None, "PAUSE", PAUSE_X_POS, PAUSE_Y_POS, PAUSE_WIDTH, PAUSE_HEIGHT)
 
     #display heart images
-    heart = Button("images/backgrounds/Heart.png", None, None, "HEART")
+    heart = Button(pygame.image.load("images/objects/Heart.png"), None, None, "HEART", HEART_X_POS_1, HEART_Y_POS, HEART_WIDTH, HEART_HEIGHT)
 
-
-
-    jumpCount = 10
 
     running = True
     while running:
@@ -77,7 +74,7 @@ def main():
         screen.blit(score_font.render("SCORE:", True, SCORE_COLOR), (SCORE_X_POS, SCORE_Y_POS))
 
         #display the hearts
-        heart.display_heart()
+        heart.display_button()
 
         # Set the clock tick to be 60 times per second. 60 frames for second.
         # If we want faster game - increase the parameter.

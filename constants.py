@@ -38,3 +38,4 @@ HEART_X_POS_1 = 20
 HEART_Y_POS = 20
 HEART_WIDTH = 50
 HEART_HEIGHT = 50
+HEART_PATH = "images/Objects/Heart.png"
