@@ -33,12 +33,14 @@ SCORE_Y_POS = 10
 SCORE_SIZE = 20
 SCORE_COLOR = (255, 255, 255)
 
-#Heart number 1
-HEART_X_POS_1 = 20
-HEART_Y_POS = 20
+#Hearts number
+HEART_X_POS_1 = 10
+HEART_Y_POS = 50
 HEART_WIDTH = 50
 HEART_HEIGHT = 50
 HEART_PATH = "images/Objects/Heart.png"
+HEART_X_POS_2 = 65
+HEART_X_POS_3 = 120
 
 
 # Railing

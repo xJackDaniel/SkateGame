@@ -29,6 +29,9 @@ def main():
     #display heart images
     heart = Button(pygame.image.load("images/objects/Heart.png"), None, None, "HEART", HEART_X_POS_1, HEART_Y_POS, HEART_WIDTH, HEART_HEIGHT)
 
+    heart2 = Button(pygame.image.load(HEART_PATH), None, None, "HEART", HEART_X_POS_2, HEART_Y_POS, HEART_WIDTH, HEART_HEIGHT)
+
+    heart3 = Button(pygame.image.load(HEART_PATH), None, None, "HEART", HEART_X_POS_3, HEART_Y_POS, HEART_WIDTH, HEART_HEIGHT)
 
     running = True
     while running:
@@ -76,6 +79,8 @@ def main():
 
         #display the hearts
         heart.display_button()
+        heart2.display_button()
+        heart3.display_button()
 
         # Set the clock tick to be 60 times per second. 60 frames for second.
         # If we want faster game - increase the parameter.
