@@ -2,6 +2,7 @@ import pygame
 from constants import *
 from helpers import screen
 from classes.Player import *
+from screen_classes.Button import *
 
 
 def main():
@@ -20,6 +21,14 @@ def main():
 
     # display the character
     player = Player(3, "images/Characters/Character1.png", 0, 0)
+
+    #display pause button
+    pause = Button("images/buttons/Pause.png", None, None, "PAUSE")
+
+    #display heart images
+    heart = Button("images/backgrounds/Heart.png", None, None, "HEART")
+
+
 
     jumpCount = 10
 
@@ -41,13 +50,8 @@ def main():
             if player.jump is False and pressed[pygame.K_SPACE]:
                 player.jump = True
 
-            if player.jump is True:
-                if jumpCount >= -10:
-                    player.y -= (jumpCount * abs(jumpCount)) * 0.5
-                    jumpCount -= 1
-                else:
-                    jumpCount = 10
-                    player.jump = False
+        if player.jump is True:
+            player.player_jump()
 
 
         # Update the screen
@@ -64,6 +68,16 @@ def main():
 
         # Display the ground
         pygame.draw.rect(screen, GROUND_COLOR, pygame.Rect(GROUND_X, GROUND_Y, GROUND_WIDTH, GROUND_HEIGHT))
+
+        #Display the pasue button
+        pause.display_button()
+
+        #Display the score
+        score_font = pygame.font.SysFont("Arial", SCORE_SIZE)
+        screen.blit(score_font.render("SCORE:", True, SCORE_COLOR), (SCORE_X_POS, SCORE_Y_POS))
+
+        #display the hearts
+        heart.display_heart()
 
         # Set the clock tick to be 60 times per second. 60 frames for second.
         # If we want faster game - increase the parameter.
