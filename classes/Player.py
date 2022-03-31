@@ -9,6 +9,10 @@ class Player:
         self.best_score = best_score
         self.current_score = current_score
         self.down = False
+        self.jump = False
+        self.height = CHARACTER_HEIGHT
+        self.y = CHARACTER_Y_POS
+        self.x = CHARACTER_X_POS
         self.character_img = pygame.image.load("images/Characters/Character1.png")
 
     def get_hearts(self):
@@ -35,14 +39,27 @@ class Player:
         """Set a new best score to the player"""
         pass
 
+    def get_height(self):
+        """Returns the player's character height"""
+        return self.height
+
     def display_player(self):
         """Display the player character on the screen"""
-        self.character_img = pygame.transform.scale(self.character_img, (CHARACTER_WIDTH, CHARACTER_HEIGHT))
-        screen.blit(self.character_img, (CHARACTER_X_POS, CHARACTER_Y_POS))
+        self.character_img = pygame.transform.scale(self.character_img, (CHARACTER_WIDTH, self.height))
+        screen.blit(self.character_img, (self.x, self.y))
+
+    def reset_player(self):
+        """Reset the player Y and Height"""
+        self.y = CHARACTER_Y_POS
+        self.height = CHARACTER_HEIGHT
+        self.down = False
 
     def get_down(self):
         """The character bending over"""
-        self.character_img = pygame.transform.scale(self.character_img, (CHARACTER_WIDTH, CHARACTER_HEIGHT-60))
-        screen.blit(self.character_img, (CHARACTER_X_POS, CHARACTER_Y_POS+60))
+        self.height = CHARACTER_HEIGHT - 60
+        self.y = CHARACTER_Y_POS + 60
+        self.down = True
+
+
 
 
