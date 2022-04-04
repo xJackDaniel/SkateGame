@@ -35,7 +35,7 @@ class Player:
 
     def add_score(self):
         """Add score to the current_score"""
-        pass
+        self.current_score += 0.4
 
     def set_best_score(self):
         """Set a new best score to the player"""

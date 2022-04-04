@@ -28,17 +28,30 @@ class Bar:
         """Returns True/False if the player needs to jump over the bar"""
         return self.jump
 
-    def bar_join(self):
+    def bar_join(self, current_score):
         """Start moving the bar"""
-        if not self.moving:
-            self.moving = True
-            while(self.x != -100):
-                self.x -= 20
-            self.moving = False
-            self.x = RAILING_START_X + 100
+        if self.moving:
+            if self.x > -300:
+                self.x -= current_score * 0.1
+            else:
+                self.reset_bar()
+
+    def reset_bar(self):
+        """Reset the bar's position"""
+        if self.type == RAILING_TYPE:
+            self.x = RAILING_START_X
+        elif self.type == BIRD_TYPE:
+            self.x = BIRD_START_X
+        else:
+            self.x = STAIRS_START_X
+        self.moving = False
 
     def create_bar(self):
         """Creates the bar out of the screen"""
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
-        screen.blit(self.image, (self.x, RAILING_Y))
-
+        if self.type == RAILING_TYPE:
+            screen.blit(self.image, (self.x, RAILING_Y))
+        elif self.type == BIRD_TYPE:
+            screen.blit(self.image, (self.x, BIRD_Y))
+        else:
+            screen.blit(self.image, (self.x, STAIRS_Y))
