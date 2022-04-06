@@ -94,8 +94,6 @@ def main():
         # Display the ground
         pygame.draw.rect(screen, GROUND_COLOR, pygame.Rect(GROUND_X, GROUND_Y, GROUND_WIDTH, GROUND_HEIGHT))
 
-
-
         # Display the clouds
         cloud1.display_cloud()
         cloud2.display_cloud()
@@ -138,15 +136,25 @@ def main():
             # because if the stairs are slow the user can't jump
             while player.current_score < 200 and bar == stairs:
                 bar = random.choice(bars)
+            # New bar - need reset to fields
             bar.moving = True
+            bar.check = False
             moving_bar = bar
 
 
         # Check if user pass the bar
-        if moving_bar and player.check_pass(moving_bar) is False:
-            print("Fail")
-            pygame.quit()
-            quit()
+        if moving_bar:
+            check = player.check_pass(moving_bar, heart_1, heart_2, heart_3)
+            if check is not None:
+                if check is False:
+                    # If the user don't pass the bar - need to check his hearts
+                    if player.hearts == 0:
+                        # The user reached 0 hearts - end of the game
+                        print("end game")
+                        pygame.quit()
+                        quit()
+                # In order not to check the same bar several times
+                moving_bar.check = True
 
         #Add score to the player
         player.add_score()

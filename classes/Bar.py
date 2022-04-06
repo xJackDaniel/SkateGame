@@ -11,6 +11,7 @@ class Bar:
         self.moving = False
         self.x = x
         self.image = pygame.image.load(image)
+        self.check = False
 
     def get_type(self):
         """Returns the bar's type"""
