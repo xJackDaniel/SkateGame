@@ -1,9 +1,12 @@
 import pygame
 from constants import *
 from helpers import screen
+import helpers
 from classes.Player import *
 from classes.Bar import *
+
 from screen_classes.Button import *
+from screen_classes.Cloud import *
 import random
 
 def main():
@@ -20,16 +23,24 @@ def main():
     img = pygame.transform.scale(img, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
 
-    # display the character
+    # Create the character
     player = Player(3, "images/Characters/Character1.png", 0, 0)
 
-    #display pause button
+    # Create pause button
     pause = Button(pygame.image.load("images/buttons/Pause.png"), None, None, "PAUSE", PAUSE_X_POS, PAUSE_Y_POS, PAUSE_WIDTH, PAUSE_HEIGHT)
 
-    #display heart images
+    # Create heart images
     heart_1 = Button(pygame.image.load(HEART_PATH), None, None, HEART_ID+"1", HEART_X_POS_1, HEART_Y_POS, HEART_WIDTH, HEART_HEIGHT)
     heart_2 = Button(pygame.image.load(HEART_PATH), None, None, HEART_ID+"2", HEART_X_POS_2, HEART_Y_POS, HEART_WIDTH, HEART_HEIGHT)
     heart_3 = Button(pygame.image.load(HEART_PATH), None, None, HEART_ID+"3", HEART_X_POS_3, HEART_Y_POS, HEART_WIDTH, HEART_HEIGHT)
+
+    # Create clouds
+    cloud1 = Cloud(True, pygame.image.load(CLOUD_IMAGE), 1)
+    cloud2 = Cloud(True, pygame.image.load(CLOUD_IMAGE), 2)
+    cloud3 = Cloud(True, pygame.image.load(CLOUD_IMAGE), 3)
+    cloud4 = Cloud(True, pygame.image.load(CLOUD_IMAGE), 4)
+    cloud5 = Cloud(True, pygame.image.load(CLOUD_IMAGE), 5)
+    cloud6 = Cloud(True, pygame.image.load(CLOUD_IMAGE), 6)
 
     # Create railing bar
     railing = Bar(RAILING_TYPE, RAILING_HEIGHT, RAILING_WIDTH, False, RAILING_START_X, RAILING_IMAGE)
@@ -42,6 +53,9 @@ def main():
 
     # Bars list
     bars = [stairs, railing, bird]
+
+    # No bar moving at the start
+    moving_bar = None
 
     running = True
     while running:
@@ -80,19 +94,32 @@ def main():
         # Display the ground
         pygame.draw.rect(screen, GROUND_COLOR, pygame.Rect(GROUND_X, GROUND_Y, GROUND_WIDTH, GROUND_HEIGHT))
 
-        #Display the pasue button
-        pause.display_button()
+
+
+        # Display the clouds
+        cloud1.display_cloud()
+        cloud2.display_cloud()
+        cloud3.display_cloud()
+        cloud4.display_cloud()
+        cloud5.display_cloud()
+        cloud6.display_cloud()
+
+        # Move the clouds
+        clouds_move(cloud1, cloud2, cloud3, cloud4, cloud5, cloud6)
 
         #Display the score
         score_font = pygame.font.SysFont("Arial", SCORE_SIZE)
         screen.blit(score_font.render(f"SCORE: {int(player.current_score)}", True, SCORE_COLOR), (SCORE_X_POS, SCORE_Y_POS))
+
+        #Display the pasue button
+        pause.display_button()
 
         #display the hearts
         heart_1.display_button()
         heart_2.display_button()
         heart_3.display_button()
 
-        #display the bar
+        #display the bars
         railing.create_bar()
         railing.bar_join(player.get_current_score())
 
@@ -101,6 +128,7 @@ def main():
 
         bird.create_bar()
         bird.bar_join(player.get_current_score())
+
 
         # Start the moving of the railing
         if not railing.moving and not stairs.moving and not bird.moving:
@@ -111,6 +139,14 @@ def main():
             while player.current_score < 200 and bar == stairs:
                 bar = random.choice(bars)
             bar.moving = True
+            moving_bar = bar
+
+
+        # Check if user pass the bar
+        if moving_bar and player.check_pass(moving_bar) is False:
+            print("Fail")
+            pygame.quit()
+            quit()
 
         #Add score to the player
         player.add_score()

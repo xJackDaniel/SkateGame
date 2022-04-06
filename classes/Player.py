@@ -55,6 +55,7 @@ class Player:
         self.y = CHARACTER_Y_POS
         self.height = CHARACTER_HEIGHT
         self.down = False
+        self.character_img = pygame.image.load("images/Characters/Character1.png")
 
     def get_down(self):
         """The character bending over"""
@@ -70,6 +71,14 @@ class Player:
         else:
             self.jump_count = 10
             self.jump = False
+
+    def check_pass(self, bar):
+        """Checks if player pass the bar"""
+        if (self.x <= bar.x) and ((self.x + CHARACTER_WIDTH) >= bar.x):
+            if bar.jump:
+                return self.jump
+            else:
+                return self.down
 
 
 
