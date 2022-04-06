@@ -64,6 +64,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                pos = event.pos
+                if mouse_in_object(pause, pos):
+                    # TODO: Pause screen
+                    print("Paused")
 
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_DOWN]:
@@ -151,6 +156,7 @@ def main():
                     if player.hearts == 0:
                         # The user reached 0 hearts - end of the game
                         print("end game")
+                        # TODO: End game and save data in the json file
                         pygame.quit()
                         quit()
                 # In order not to check the same bar several times
