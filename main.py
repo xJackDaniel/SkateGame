@@ -157,6 +157,9 @@ def main():
                 if check is False:
                     # If the user don't pass the bar - need to check his hearts
                     if player.hearts == 0:
+                        if player.current_score > data.get("best_score"):
+                            data["best_score"] = int(player.current_score)
+                            write_data(data)
                         # The user reached 0 hearts - end of the game
                         print("end game")
                         # TODO: End game and save data in the json file
@@ -164,6 +167,7 @@ def main():
                         quit()
                 # In order not to check the same bar several times
                 moving_bar.check = True
+
 
         #Add score to the player
         player.add_score()
