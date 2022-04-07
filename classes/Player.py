@@ -35,7 +35,7 @@ class Player:
 
     def add_score(self):
         """Add score to the current_score"""
-        pass
+        self.current_score += 0.4
 
     def set_best_score(self):
         """Set a new best score to the player"""
@@ -55,6 +55,7 @@ class Player:
         self.y = CHARACTER_Y_POS
         self.height = CHARACTER_HEIGHT
         self.down = False
+        self.character_img = pygame.image.load("images/Characters/Character1.png")
 
     def get_down(self):
         """The character bending over"""
@@ -71,5 +72,34 @@ class Player:
             self.jump_count = 10
             self.jump = False
 
+    def check_pass(self, bar, heart_1, heart_2, heart_3):
+        """Checks if player pass the bar"""
+        # Check that the bar is not already checked
+        if bar.check is False:
+            # Check if the bar is found on the player
+            if (self.x <= bar.x) and ((self.x + CHARACTER_WIDTH) >= bar.x):
+                if bar.jump:
+                    # If the user needs to jump in this bar - check jump
+                    if self.jump is False:
+                        self.hearts -= 1
+                        # If the user didn't jump - remove heart
+                        self.hearts_check(heart_1, heart_2, heart_3)
+                    return self.jump
+                else:
+                    # If the user needs to get down in this bar - check down
+                    if self.down is False:
+                        # If the user didn't get down - remove heart
+                        self.hearts -= 1
+                        self.hearts_check(heart_1, heart_2, heart_3)
+                    return self.down
 
+    def hearts_check(self, heart_1, heart_2, heart_3):
+        """Removes heart"""
+        if self.hearts > 0:
+            if self.hearts == 2:
+                heart_3.x = HEART_X_OUT
+            else:
+                heart_2.x = HEART_X_OUT
+        else:
+            heart_1.x = HEART_X_OUT
 
