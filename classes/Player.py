@@ -13,7 +13,7 @@ class Player:
         self.height = CHARACTER_HEIGHT
         self.y = CHARACTER_Y_POS
         self.x = CHARACTER_X_POS
-        self.character_img = pygame.image.load("images/Characters/Character1.png")
+        self.character_img = pygame.image.load(skin)
         self.jump_count = JUMP_COUNT
 
 

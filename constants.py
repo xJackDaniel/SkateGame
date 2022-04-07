@@ -8,7 +8,10 @@ CHARACTER_WIDTH = 150
 CHARACTER_X_POS = 30
 CHARACTER_Y_POS = 310
 
-# Character's paths
+# Characters
+CHARACTERS_AMOUNT = 5
+CHARACTER_EQUIPPED = "equipped"
+
 
 
 # Ground

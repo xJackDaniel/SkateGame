@@ -1,5 +1,5 @@
 import pygame
-
+import json
 from constants import *
 
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -27,6 +27,27 @@ def mouse_in_object(obj, mouse_pos):
             obj.y < mouse_pos[1] < obj.y + obj.height:
         return True
 
+def read_data():
+    """Read data and return as dictionary"""
+    # Opening JSON file
+    f = open('data.json')
+
+    # returns JSON object as
+    # a dictionary
+    data = json.load(f)
+    return data
+
+def write_data(data):
+    """Write data to the file"""
+    with open('data.json', 'w') as data_file:
+        json.dump(data, data_file)
+
+def equipped_character():
+    """Return the equipped user character"""
+    data = read_data()
+    for char in range(CHARACTERS_AMOUNT):
+        if data.get(f"character_{char+1}") == CHARACTER_EQUIPPED:
+            return f"Character{char+1}", char+1
 
 
 

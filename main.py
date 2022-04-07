@@ -22,9 +22,12 @@ def main():
     img = pygame.image.load("images/backgrounds/background.png")
     img = pygame.transform.scale(img, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
+    # Receive data
+    data = read_data()
 
     # Create the character
-    player = Player(3, "images/Characters/Character1.png", 0, 0)
+    character, character_num = equipped_character()
+    player = Player(3, f"images/Characters/{character}.png", 0, 0)
 
     # Create pause button
     pause = Button(pygame.image.load("images/buttons/Pause.png"), None, None, "PAUSE", PAUSE_X_POS, PAUSE_Y_POS, PAUSE_WIDTH, PAUSE_HEIGHT)
