@@ -27,10 +27,10 @@ def main():
 
     # Create the character
     character, character_num = equipped_character()
-    player = Player(3, f"images/Characters/{character}.png", 0, 0)
+    player = Player(START_HEARTS, f"{CHARACTER_PATH}{character}.png", data.get(BEST_SCORE), 0)
 
     # Create pause button
-    pause = Button(pygame.image.load("images/buttons/Pause.png"), None, None, "PAUSE", PAUSE_X_POS, PAUSE_Y_POS, PAUSE_WIDTH, PAUSE_HEIGHT)
+    pause = Button(pygame.image.load(PAUSE_PATH), None, None, PAUSE_PATH, PAUSE_X_POS, PAUSE_Y_POS, PAUSE_WIDTH, PAUSE_HEIGHT)
 
     # Create heart images
     heart_1 = Button(pygame.image.load(HEART_PATH), None, None, HEART_ID+"1", HEART_X_POS_1, HEART_Y_POS, HEART_WIDTH, HEART_HEIGHT)
@@ -157,6 +157,7 @@ def main():
                 if check is False:
                     # If the user don't pass the bar - need to check his hearts
                     if player.hearts == 0:
+                        add_coins(data, player.current_score)
                         # The user reached 0 hearts - end of the game
                         print("end game")
                         # TODO: End game and save data in the json file

@@ -1,3 +1,7 @@
+# Data
+BEST_SCORE = "best_score"
+START_HEARTS = 3
+
 # Width and Height of the project window
 WINDOW_WIDTH = 1100
 WINDOW_HEIGHT = 616
@@ -11,6 +15,7 @@ CHARACTER_Y_POS = 310
 # Characters
 CHARACTERS_AMOUNT = 5
 CHARACTER_EQUIPPED = "equipped"
+CHARACTER_PATH = "images/Characters/"
 
 
 
@@ -21,22 +26,24 @@ GROUND_X = 0
 GROUND_HEIGHT = 166
 GROUND_WIDTH = WINDOW_WIDTH
 
-#jump
+# jump
 JUMP_COUNT = 10
 
-#pause button
+# pause button
 PAUSE_X_POS = 1000
 PAUSE_Y_POS = -10
 PAUSE_WIDTH = 100
 PAUSE_HEIGHT = 100
+PAUSE_PATH = "images/buttons/Pause.png"
+PAUSE_ID = "PAUSE"
 
-#score
+# score
 SCORE_X_POS = 15
 SCORE_Y_POS = 40
 SCORE_SIZE = 20
 SCORE_COLOR = (255, 255, 255)
 
-#Hearts
+# Hearts
 HEART_X_POS_1 = 10
 HEART_X_POS_2 = 45
 HEART_X_POS_3 = 80
@@ -62,7 +69,7 @@ STAIRS_WIDTH = 100
 STAIRS_HEIGHT = 100
 STAIRS_START_X = WINDOW_WIDTH + STAIRS_WIDTH
 STAIRS_Y = 350
-STAIRS_IMAGE =  "images/obsticles/Stairs.png"
+STAIRS_IMAGE = "images/obsticles/Stairs.png"
 
 # Bird
 BIRD_TYPE = "bird"
@@ -70,7 +77,7 @@ BIRD_WIDTH = 160
 BIRD_HEIGHT = 160
 BIRD_START_X = WINDOW_WIDTH + BIRD_WIDTH
 BIRD_Y = 200
-BIRD_IMAGE =  "images/obsticles/Bird.png"
+BIRD_IMAGE = "images/obsticles/Bird.png"
 
 # Clouds
 CLOUD_WIDTH = 200
@@ -78,3 +85,4 @@ CLOUD_HEIGHT = 100
 CLOUD_Y = [0, 20, 10, 25, -10, 5]
 CLOUD_X = [WINDOW_WIDTH, WINDOW_WIDTH+200, WINDOW_WIDTH+400, WINDOW_WIDTH+600, WINDOW_WIDTH+800, WINDOW_WIDTH+1000]
 CLOUD_IMAGE = "images/Objects/Cloud.png"
+

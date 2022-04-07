@@ -49,6 +49,11 @@ def equipped_character():
         if data.get(f"character_{char+1}") == CHARACTER_EQUIPPED:
             return f"Character{char+1}", char+1
 
-
+def add_coins(data, score):
+    """Add score score by data"""
+    added_coins = score * 2
+    current_coins = data.get("coins")
+    data["coins"] = int(current_coins + added_coins)
+    write_data(data)
 
 
