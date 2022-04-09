@@ -1,25 +1,31 @@
+import pygame
+from helpers import screen
+from constants import *
+
 class Character:
-    def __init__(self, id, price, image, name):
+    def __init__(self, id, x, y, price, image):
         self.id = id
         self.price = price
-        self.image = image
-        self.name = name
+        self.image = pygame.image.load(image)
+        self.x = x
+        self.y = y
+        self.width = CHARACTER_WIDTH
+        self.height = CHARACTER_HEIGHT
 
-    def get_id(self):
-        """Returns the id of the character"""
-        return self.id
 
     def get_price(self):
         """Returns the price for the character"""
         return self.price
 
-    def get_iamge_url(self):
-        """Returns the image_url of the character"""
-        return self.image
+    def display_character(self):
+        """Display the character on the shop"""
+        self.image = pygame.transform.scale(self.image, (CHARACTER_WIDTH, CHARACTER_HEIGHT))
+        screen.blit(self.image, (self.x, self.y))
 
-    def get_name(self):
-        """Returns the name of the character"""
-        return self.name
+        # Display the character price
+        character_font = pygame.font.SysFont("Arial", SHOP_PRICE_SIZE)
+        screen.blit(character_font.render("Price: {:,}".format(self.price), True, SHOP_COLOR),
+                    (self.x+25, SHOP_PRICE_Y_POS))
 
     def is_own(self):
         """Return True/False if the player owns this character."""

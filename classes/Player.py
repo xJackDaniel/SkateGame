@@ -50,6 +50,8 @@ class Player:
         self.character_img = pygame.transform.scale(self.character_img, (CHARACTER_WIDTH, self.height))
         screen.blit(self.character_img, (self.x, self.y))
 
+
+
     def reset_player(self):
         """Reset the player Y and Height"""
         self.y = CHARACTER_Y_POS
@@ -96,10 +98,14 @@ class Player:
     def hearts_check(self, heart_1, heart_2, heart_3):
         """Removes heart"""
         if self.hearts > 0:
-            if self.hearts == 2:
+            if self.hearts == 3:
+                return
+            elif self.hearts == 2:
                 heart_3.x = HEART_X_OUT
             else:
                 heart_2.x = HEART_X_OUT
+                # If user pause and resume we need to move the 3rd heart again
+                heart_3.x = HEART_X_OUT
         else:
             heart_1.x = HEART_X_OUT
 

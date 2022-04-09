@@ -1,6 +1,7 @@
 import pygame
 import json
 from constants import *
+import time
 
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
@@ -55,5 +56,18 @@ def add_coins(data, score):
     current_coins = data.get("coins")
     data["coins"] = int(current_coins + added_coins)
     write_data(data)
+
+def hover(x):
+    """Display a green arrow above the character at the shop"""
+    arrow = pygame.image.load(ARROW_PATH)
+    arrow = pygame.transform.scale(arrow, (ARROW_WIDTH, ARROW_HEIGHT))
+    screen.blit(arrow, (x + 20, ARROW_Y_POS))
+
+def new_best_score():
+    """A new best score message"""
+    x = BEST_SCORE_MESSAGE_X
+    message_font = pygame.font.SysFont("Arial", BEST_SCORE_MESSAGE_SIZE)
+    screen.blit(message_font.render("NEW BEST SCORE!", True, SHOP_COLOR),
+                (x, BEST_SCORE_MESSAGE_Y))
 
 
