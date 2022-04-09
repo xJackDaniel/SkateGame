@@ -57,7 +57,7 @@ class Player:
         self.y = CHARACTER_Y_POS
         self.height = CHARACTER_HEIGHT
         self.down = False
-        self.character_img = pygame.image.load("images/Characters/Character1.png")
+        self.character_img = pygame.image.load(self.skin)
 
     def get_down(self):
         """The character bending over"""

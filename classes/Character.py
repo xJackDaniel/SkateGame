@@ -1,6 +1,7 @@
 import pygame
 from helpers import screen
 from constants import *
+from helpers import *
 
 class Character:
     def __init__(self, id, x, y, price, image):
@@ -27,6 +28,18 @@ class Character:
         screen.blit(character_font.render("Price: {:,}".format(self.price), True, SHOP_COLOR),
                     (self.x+25, SHOP_PRICE_Y_POS))
 
-    def is_own(self):
-        """Return True/False if the player owns this character."""
-        pass
+        # Display the Character's user status (Equip, Equipped, Buy)
+        status_font = pygame.font.SysFont("Arial", SHOP_PRICE_SIZE)
+        status = get_character_status(int(self.id))
+        if status == CHARACTER_OWN:
+            status = "Equip"
+            color = BLUE
+        elif status == CHARACTER_NOT_OWN:
+            status = "Buy"
+            color = RED
+        else:
+            status = "Equipped"
+            color = GREEN
+
+        screen.blit(status_font.render(status, True, color),
+                    (self.x+30, SHOP_PRICE_Y_POS + 30))

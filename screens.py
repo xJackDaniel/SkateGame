@@ -234,6 +234,7 @@ def home(img, clock, data):
         clock.tick(30)
 
 def shop(img, clock, data):
+
     # Create buttons
     home_btn = Button(pygame.image.load(HOME_PATH), "home", HOME_ID, HOME_X, HOME_Y, HOME_WIDTH, HOME_HEIGHT)
 
@@ -245,9 +246,12 @@ def shop(img, clock, data):
     character_5 = Character("5", SHOP_CHARACTER_X_POS_5, SHOP_CHARACTER_Y_POS, CHARACTER_PRICE_5, CHARACTER_PATH+"Character5.png")
     arrow_x = ARROW_X
 
-
-
     running = True
+    # At first no message to display
+    message_display = False
+    message = None
+    message_color = None
+
     while running:
         # Grabs events such as key pressed, mouse pressed and so.
         # Going through all the events that happened in the last clock tick
@@ -256,12 +260,9 @@ def shop(img, clock, data):
                 running = False
                 pygame.quit()
                 quit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEMOTION:
                 pos = event.pos
-                if mouse_in_object(home_btn, pos):
-                    home(img=img, clock=clock, data=data)
-            if event.type == pygame.MOUSEMOTION:
-                pos = event.pos
+                # Display arrow on mouse hover
                 if mouse_in_object(character_1, pos):
                     arrow_x = character_1.x + 25
                 elif mouse_in_object(character_2, pos):
@@ -274,6 +275,49 @@ def shop(img, clock, data):
                     arrow_x = character_5.x + 25
                 else:
                     arrow_x = ARROW_X
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                pos = event.pos
+                # If home button clicked - display home screen
+                if mouse_in_object(home_btn, pos):
+                    home(img=img, clock=clock, data=data)
+                # Check if left click(mouse)
+                if event.button == 1:
+                    # No character was clicked
+                    char_num = 0
+                    # Checks which character was clicked (if character clicked)
+                    if mouse_in_object(character_1, pos):
+                        message_display, message, message_color = True, "Character 1 successfully equipped!", SUCCESS_COLOR
+                        data = equipe_character(1, data)
+                        char_num = 1
+                    elif mouse_in_object(character_2, pos):
+                        char_num = 2
+                    elif mouse_in_object(character_3, pos):
+                        char_num = 3
+                    elif mouse_in_object(character_4, pos):
+                        char_num = 4
+                    elif mouse_in_object(character_5, pos):
+                        char_num = 5
+                    # Make sure that a character clicked
+                    if char_num > 1:
+                        # Check if user own this character
+                        if character_own(char_num):
+                            # Success message
+                            message_display, message, message_color = True, f"Character {char_num} successfully equipped!", SUCCESS_COLOR
+                            data = equipe_character(char_num, data)
+                        else:
+                            # Check if user have enough money to buy this character
+                            if int(data.get("coins")) >= PRICES[char_num]:
+                                # Remove coins
+                                data = remove_coins(PRICES[char_num], data)
+                                # Set character as own
+                                data = set_own_character(char_num, data)
+                                # Success message
+                                message_display, message, message_color = True, f"Character {char_num} bought successfully!", SUCCESS_COLOR
+                            else:
+                                # The user don't have enough money to buy this character
+                                message_display, message, message_color = True, "You don't have enough money!", ERROR_COLOR
+
+
         # Update the screen
         pygame.display.flip()
         # Update display - without input update everything
@@ -283,11 +327,11 @@ def shop(img, clock, data):
         # Display the coins
         score_font = pygame.font.SysFont("Arial", COIN_SIZE)
         screen.blit(score_font.render(str(data.get("coins")), True, COIN_COLOR),
-                    (20, HOME_Y))
+                    (60, HOME_Y))
 
         coin = pygame.image.load(COIN_PATH)
         coin = pygame.transform.scale(coin, (COIN_WIDTH, COIN_HEIGHT))
-        screen.blit(coin, (90, HOME_Y))
+        screen.blit(coin, (20, HOME_Y))
         # Display the ground
         pygame.draw.rect(screen, GROUND_COLOR, pygame.Rect(GROUND_X, GROUND_Y, GROUND_WIDTH, GROUND_HEIGHT))
         # Display the buttons on the screen
@@ -300,6 +344,11 @@ def shop(img, clock, data):
         character_5.display_character()
         # Hover
         hover(arrow_x)
+        # Display the message
+        if message_display is True:
+            message_font = pygame.font.SysFont("Arial", SHOP_MESSAGE_SIZE)
+            screen.blit(message_font.render(message, True, message_color),
+                        (SHOP_MESSAGE_X, SHOP_MESSAGE_Y))
 
 
         clock.tick(30)
