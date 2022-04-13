@@ -229,6 +229,103 @@ OVER_SCORE_Y_POS = 370
 OVER_SCORE_SIZE = 50
 OVER_SCORE_COLOR = (255, 255, 255)
 
+# The inner white rectangle where the tips will be writen.
+COLOR_RECT = (255, 255, 255)
+X_RECT = 480
+Y_RECT = 200
+WIDTH_RECT = 590
+HEIGHT_RECT = 310
+
+# A black layer of our rectangle which will be displayed behind it.
+X_FRAME = 470
+Y_FRAME = 190
+WIDTH_FRAME = 610
+HEIGHT_FRAME = 330
+
+# The title inside the rectangle
+TITLE_INFO_TEXT = "Tips and Help:"
+TITLE_INFO_COLOR = (0, 0, 0)
+TITLE_INFO_X = 655
+TITLE_INFO_Y = 200
 
 
+# Text explanation on how to avoid the bird
+BIRD_INFO_X_POS = 555
+BIRD_INFO_Y_POS = 250
+BIRD_TEXT_INFO = " - To get past the bird, press the bottom arrow button to crouch."
+BIRD_TEXT_INFO_COLOR = (0, 0, 0)
 
+# Bird image for display
+BIRD_PATH = "images/obsticles/Bird.png"
+INFO_BIRD_WIDTH = 50
+INFO_BIRD_HEIGHT = 50
+INFO_BIRD_X = 490
+INFO_BIRD_Y = 230
+
+# Text explanation on how to avoid the railing
+RAILING_INFO_X_POS = 555
+RAILING_INFO_Y_POS = 300
+RAILING_TEXT_INFO = " - To get past the railing, press the bottom arrow button to crouch."
+RAILING_TEXT_INFO_COLOR = (0, 0, 0)
+
+# Railing image for display
+RAILING_PATH = "images/obsticles/Railing.png"
+INFO_RAILING_WIDTH = 50
+INFO_RAILING_HEIGHT = 50
+INFO_RAILING_X = 490
+INFO_RAILING_Y = 285
+
+# Text explanation on how to avoid the stairs
+STAIRS_INFO_X_POS = 555
+STAIRS_INFO_Y_POS = 350
+STAIRS_INFO = " - To get past the stairs, press the upper arrow button to jump."
+STAIRS_INFO_COLOR = (0, 0, 0)
+
+# Stairs image for display
+STAIRS_PATH = "images/obsticles/Stairs.png"
+INFO_STAIRS_WIDTH = 50
+INFO_STAIRS_HEIGHT = 50
+INFO_STAIRS_X = 490
+INFO_STAIRS_Y = 340
+
+# Upper arrow button
+UPPER_ARROW_PATH = "images/Arrow_buttons/Upper_arrow_button.png"
+UPPER_ARROW_WIDTH = 50
+UPPER_ARROW_HEIGHT = 50
+UPPER_ARROW_X = 910
+UPPER_ARROW_Y = 350
+
+# bottom arrow button
+BOTTOM_ARROW_PATH = "images/Arrow_buttons/Bottom_arrow_button.png"
+BOTTOM_ARROW_WIDTH = 50
+BOTTOM_ARROW_HEIGHT = 50
+BOTTOM_ARROW_X = 910
+BOTTOM_ARROW_Y = 220
+
+# The second bottom arrow button
+BOTTOM_ARROW_X_2 = 910
+BOTTOM_ARROW_Y_2 = 280
+
+# Text explanation for the hearts that appear randomly while the game is running
+HEART_TEXT_INFO = " - These hearts will randomly spawn while the game is running. Jump to get bonus health. "
+HEART_TEXT_COLOR = (0, 0, 0)
+HEART_TEXT_X = 555
+HEART_TEXT_Y = 420
+
+# Heart image which will be displayed next to its text explanation
+BONUS_HEART_WIDTH = 50
+BONUS_HEART_HEIGHT = 50
+BONUS_HEART_X = 490
+BONUS_HEART_Y = 400
+
+# Text explanation for the coins that appear randomly while the game is running
+COIN_INFO = " - These coins will randomly spawn while the game is running. jump to get bonus 50 coins."
+COIN_INFO_COLOR = (0, 0, 0)
+COIN_INFO_X = 555
+COIN_INFO_Y = 470
+
+# Coin image which will be displayed next to its explanation
+BONUS_COIN_WIDTH = 50
+BONUS_COIN_HEIGHT = 50
+BONUS_COIN_X = 490
+BONUS_COIN_Y = 460

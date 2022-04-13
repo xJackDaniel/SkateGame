@@ -210,6 +210,75 @@ def home(img, clock, data):
     logo = pygame.transform.scale(logo, (LOGO_WIDTH, LOGO_HEIGHT))
     screen.blit(logo, (LOGO_IMAGE_X, LOGO_Y))
 
+    #Display the frame of the rectange
+    pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(X_FRAME,  Y_FRAME, WIDTH_FRAME, HEIGHT_FRAME))
+
+    #Display the "help" rectangle
+    pygame.draw.rect(screen, COLOR_RECT, pygame.Rect(X_RECT, Y_RECT, WIDTH_RECT, HEIGHT_RECT))
+
+    #Display the title of the information rectangle
+    title_info_font = pygame.font.SysFont("Arial", 25)
+    screen.blit(title_info_font.render(TITLE_INFO_TEXT, True, TITLE_INFO_COLOR), (TITLE_INFO_X, TITLE_INFO_Y))
+
+    #Display the text info about the bird obstible
+    info_font = pygame.font.SysFont("Arial", 15)
+    screen.blit(info_font.render(BIRD_TEXT_INFO, True, BIRD_TEXT_INFO_COLOR), (BIRD_INFO_X_POS, BIRD_INFO_Y_POS))
+
+    #Display the bird close to its obsticle informantion
+    info_bird = pygame.image.load(BIRD_PATH)
+    info_bird = pygame.transform.scale(info_bird, (INFO_BIRD_WIDTH, INFO_BIRD_HEIGHT))
+    screen.blit(info_bird, (INFO_BIRD_X, INFO_BIRD_Y))
+
+    #Display the text info about the railing obsticle
+    info_railing_font = pygame.font.SysFont("Arial", 15)
+    screen.blit(info_railing_font.render(RAILING_TEXT_INFO, True, RAILING_TEXT_INFO_COLOR), (RAILING_INFO_X_POS, RAILING_INFO_Y_POS))
+
+    #Display the railing close to its obsticle informantion
+    info_railing = pygame.image.load(RAILING_PATH)
+    info_railing = pygame.transform.scale(info_railing, (INFO_RAILING_WIDTH, INFO_RAILING_HEIGHT))
+    screen.blit(info_railing, (INFO_RAILING_X, INFO_RAILING_Y))
+
+    #Display the text info about the stairs obsticle
+    info_stairs_font = pygame.font.SysFont("Arial", 15)
+    screen.blit(info_stairs_font.render(STAIRS_INFO, True, STAIRS_INFO_COLOR), (STAIRS_INFO_X_POS, STAIRS_INFO_Y_POS))
+
+    #Display the stairs close to its obsticle informantion
+    info_stair = pygame.image.load(STAIRS_PATH)
+    info_stair = pygame.transform.scale(info_stair, (INFO_STAIRS_WIDTH, INFO_STAIRS_HEIGHT))
+    screen.blit(info_stair, (INFO_STAIRS_X, INFO_STAIRS_Y))
+
+    #Display the upper arrow button
+    upper_arrow = pygame.image.load(UPPER_ARROW_PATH)
+    upper_arrow = pygame.transform.scale(upper_arrow, (UPPER_ARROW_WIDTH, UPPER_ARROW_HEIGHT))
+    screen.blit(upper_arrow, (UPPER_ARROW_X, UPPER_ARROW_Y))
+
+    #Display the bottom arrow button
+    bottom_arrow = pygame.image.load(BOTTOM_ARROW_PATH)
+    bottom_arrow = pygame.transform.scale(bottom_arrow, (BOTTOM_ARROW_WIDTH, BOTTOM_ARROW_HEIGHT))
+    screen.blit(bottom_arrow, (BOTTOM_ARROW_X, BOTTOM_ARROW_Y))
+
+    #Display the second bottom arrow button
+    bottom_arrow_2 = pygame.image.load(BOTTOM_ARROW_PATH)
+    bottom_arrow_2 = pygame.transform.scale(bottom_arrow_2, (BOTTOM_ARROW_WIDTH, BOTTOM_ARROW_HEIGHT))
+    screen.blit(bottom_arrow_2, (BOTTOM_ARROW_X_2, BOTTOM_ARROW_Y_2))
+
+    # Display the text information about the bonus hearts that appear while the game is running
+    bonus_heart_font = pygame.font.SysFont("Arial", 15)
+    screen.blit(bonus_heart_font.render(HEART_TEXT_INFO, True, HEART_TEXT_COLOR), (HEART_TEXT_X, HEART_TEXT_Y))
+
+    # Display heart image next to its text explanation
+    bonus_heart = pygame.image.load(HEART_PATH)
+    bonus_heart = pygame.transform.scale(bonus_heart, (BONUS_HEART_WIDTH, BONUS_HEART_HEIGHT))
+    screen.blit(bonus_heart, (BONUS_HEART_X, BONUS_HEART_Y))
+
+   # Display the text explanation about the bonus coins that appear while the game is running
+    bonus_coins_font = pygame.font.SysFont("Arial", 15)
+    screen.blit(bonus_coins_font.render(COIN_INFO, True, COIN_INFO_COLOR), (COIN_INFO_X, COIN_INFO_Y))
+
+    # Display the coin image next to its text explanation
+    bonus_coin = pygame.image.load(COIN_PATH)
+    bonus_coin = pygame.transform.scale(bonus_coin, (BONUS_COIN_WIDTH, BONUS_COIN_HEIGHT))
+    screen.blit(bonus_coin, (BONUS_COIN_X, BONUS_COIN_Y))
 
 
     running = True
