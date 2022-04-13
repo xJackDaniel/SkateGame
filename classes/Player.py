@@ -3,7 +3,7 @@ import pygame
 from constants import *
 
 class Player:
-    def __init__(self, hearts, skin, best_score, current_score):
+    def __init__(self, hearts, skin, best_score, current_score, coins):
         self.hearts = hearts
         self.skin = skin
         self.best_score = best_score
@@ -15,6 +15,7 @@ class Player:
         self.x = CHARACTER_X_POS
         self.character_img = pygame.image.load(skin)
         self.jump_count = JUMP_COUNT
+        self.coins = coins
 
 
     def get_hearts(self):
@@ -35,11 +36,11 @@ class Player:
 
     def add_score(self):
         """Add score to the current_score"""
-        self.current_score += 0.4
+        self.current_score += 0.5
 
-    def set_best_score(self):
-        """Set a new best score to the player"""
-        pass
+    def add_coins(self, coins):
+        """Add coins to the player's code"""
+        self.coins += coins
 
     def get_height(self):
         """Returns the player's character height"""
@@ -49,8 +50,6 @@ class Player:
         """Display the player character on the screen"""
         self.character_img = pygame.transform.scale(self.character_img, (CHARACTER_WIDTH, self.height))
         screen.blit(self.character_img, (self.x, self.y))
-
-
 
     def reset_player(self):
         """Reset the player Y and Height"""
@@ -74,13 +73,13 @@ class Player:
             self.jump_count = 10
             self.jump = False
 
-    def check_pass(self, bar, heart_1, heart_2, heart_3):
-        """Checks if player pass the bar"""
+    def check_pass(self, object, heart_1, heart_2, heart_3):
+        """Checks if player pass the object"""
         # Check that the bar is not already checked
-        if bar.check is False:
+        if object.check is False:
             # Check if the bar is found on the player
-            if (self.x <= bar.x) and ((self.x + CHARACTER_WIDTH) >= bar.x):
-                if bar.jump:
+            if (self.x <= object.x) and ((self.x + CHARACTER_WIDTH) >= object.x):
+                if object.jump:
                     # If the user needs to jump in this bar - check jump
                     if self.jump is False:
                         self.hearts -= 1
@@ -95,17 +94,36 @@ class Player:
                         self.hearts_check(heart_1, heart_2, heart_3)
                     return self.down
 
+    def claim_check(self, object):
+        """Checks if player claim the object"""
+        # Check that the object is not already checked
+        if object.check is False:
+            # Check if the bar is found on the player
+            if (self.x <= object.x) and ((self.x + CHARACTER_WIDTH) >= object.x):
+                if object.jump:
+                    return self.jump
+                else:
+                    return self.down
+
     def hearts_check(self, heart_1, heart_2, heart_3):
-        """Removes heart"""
+        """Removes heart and update hearts"""
         if self.hearts > 0:
+            # Reset all the hearts at their positions
             if self.hearts == 3:
-                return
+                heart_1.x = HEART_X_POS_1
+                heart_2.x = HEART_X_POS_2
+                heart_3.x = HEART_X_POS_3
             elif self.hearts == 2:
+                heart_1.x = HEART_X_POS_1
+                heart_2.x = HEART_X_POS_2
                 heart_3.x = HEART_X_OUT
             else:
+                heart_1.x = HEART_X_POS_1
                 heart_2.x = HEART_X_OUT
                 # If user pause and resume we need to move the 3rd heart again
                 heart_3.x = HEART_X_OUT
         else:
             heart_1.x = HEART_X_OUT
+            heart_2.x = HEART_X_OUT
+            heart_3.x = HEART_X_OUT
 
