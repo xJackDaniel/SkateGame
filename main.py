@@ -23,8 +23,9 @@ def main():
     # location(on the Image)
     screen.blit(img, (0, 0))
 
-    # Display home screen
+     # Display home screen
     home(img, clock, data)
+
 
 
 main()

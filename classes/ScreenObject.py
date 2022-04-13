@@ -65,3 +65,5 @@ class ScreenObject:
         else:
             y = STAIRS_Y
         screen.blit(self.image, (self.x, y))
+
+
