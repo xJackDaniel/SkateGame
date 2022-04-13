@@ -229,7 +229,7 @@ def game(data, img, clock, score=0, hearts=3, coins=0):
         player.add_score()
 
         # Add coins
-        player.add_coins(1)
+        player.add_coins(DEFAULT_COIN_VALUE)
 
         # Check if user reach new best score
         if (player.current_score > player.best_score) and (player.best_score > 0):
