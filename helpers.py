@@ -73,12 +73,12 @@ def character_own(num):
         return False
 
 
-def add_coins(data, score):
-    """Add coins to user from data by his score"""
-    added_coins = score * 2
+def add_coins(data, coins):
+    """Add coins to user's data"""
     current_coins = data.get("coins")
-    data["coins"] = int(current_coins + added_coins)
+    data["coins"] = int(current_coins + coins)
     write_data(data)
+    return data
 
 def remove_coins(coins: int, data):
     """Remove coins to user from data"""

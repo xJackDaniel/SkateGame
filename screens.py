@@ -3,17 +3,18 @@ from constants import *
 from helpers import screen
 import helpers
 from classes.Player import *
-from classes.Bar import *
+from classes.ScreenObject import *
 from classes.Character import *
 
 from screen_classes.Button import *
 from screen_classes.Cloud import *
 import random
 
-def game(data, img, clock, score=0, hearts=3):
+def game(data, img, clock, score=0, hearts=3, coins=0):
+    """Game screen"""
     # Create the character
     character, character_num = equipped_character()
-    player = Player(hearts, f"{CHARACTER_PATH}{character}.png", data.get(BEST_SCORE), score)
+    player = Player(hearts, f"{CHARACTER_PATH}{character}.png", data.get(BEST_SCORE), score, coins)
     # Create pause button
     pause_btn = Button(pygame.image.load(PAUSE_PATH), None, PAUSE_PATH, PAUSE_X_POS, PAUSE_Y_POS, PAUSE_WIDTH, PAUSE_HEIGHT)
 
@@ -24,6 +25,7 @@ def game(data, img, clock, score=0, hearts=3):
                      HEART_HEIGHT)
     heart_3 = Button(pygame.image.load(HEART_PATH), None, HEART_ID + "3", HEART_X_POS_3, HEART_Y_POS, HEART_WIDTH,
                      HEART_HEIGHT)
+
 
     # Check hearts - if user pause and resume - we need to check the amount of hearts
     # on the screen
@@ -37,20 +39,31 @@ def game(data, img, clock, score=0, hearts=3):
     cloud5 = Cloud(True, pygame.image.load(CLOUD_IMAGE), 5)
     cloud6 = Cloud(True, pygame.image.load(CLOUD_IMAGE), 6)
 
+    # Create heart award
+    heart_award = ScreenObject(HEART_AWARD_TYPE, HEART_AWARD_HEIGHT, HEART_AWARD_WIDTH, True, HEART_AWARD_START_X, HEART_AWARD_IMAGE)
+
+    # Create coin award
+    coin_award = ScreenObject(COIN_AWARD_TYPE, COIN_AWARD_HEIGHT, COIN_AWARD_WIDTH, True, COIN_AWARD_START_X, COIN_AWARD_IMAGE)
+
     # Create railing bar
-    railing = Bar(RAILING_TYPE, RAILING_HEIGHT, RAILING_WIDTH, False, RAILING_START_X, RAILING_IMAGE)
+    railing = ScreenObject(RAILING_TYPE, RAILING_HEIGHT, RAILING_WIDTH, False, RAILING_START_X, RAILING_IMAGE)
 
     # Create stairs bar
-    stairs = Bar(STAIRS_TYPE, STAIRS_HEIGHT, STAIRS_WIDTH, True, STAIRS_START_X, STAIRS_IMAGE)
+    stairs = ScreenObject(STAIRS_TYPE, STAIRS_HEIGHT, STAIRS_WIDTH, True, STAIRS_START_X, STAIRS_IMAGE)
 
     # Create bird bar
-    bird = Bar(BIRD_TYPE, BIRD_HEIGHT, BIRD_WIDTH, False, BIRD_START_X, BIRD_IMAGE)
+    bird = ScreenObject(BIRD_TYPE, BIRD_HEIGHT, BIRD_WIDTH, False, BIRD_START_X, BIRD_IMAGE)
 
     # Bars list
     bars = [stairs, railing, bird]
 
+    # Awards list
+    awards = [heart_award, coin_award]
+
     # No bar moving at the start
     moving_bar = None
+    # No award moving at the start
+    moving_award = None
 
     running = True
     while running:
@@ -64,7 +77,7 @@ def game(data, img, clock, score=0, hearts=3):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 pos = event.pos
                 if mouse_in_object(pause_btn, pos):
-                    pause(score=player.current_score, hearts=player.hearts, img=img, clock=clock, data=data)
+                    pause(score=player.current_score, hearts=player.hearts, img=img, clock=clock, data=data, coins=player.coins)
 
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_DOWN]:
@@ -73,7 +86,7 @@ def game(data, img, clock, score=0, hearts=3):
             elif player.down:
                 player.reset_player()
 
-            if player.jump is False and pressed[pygame.K_SPACE]:
+            if player.jump is False and pressed[pygame.K_UP]:
                 player.jump = True
 
         if player.jump is True and player.down is False:
@@ -110,6 +123,15 @@ def game(data, img, clock, score=0, hearts=3):
         screen.blit(score_font.render(f"SCORE: {int(player.current_score)}", True, SCORE_COLOR),
                     (SCORE_X_POS, SCORE_Y_POS))
 
+        # Display the coins
+        score_font = pygame.font.SysFont("Arial", COIN_GAME_SIZE)
+        screen.blit(score_font.render(str(player.coins), True, COIN_GAME_COLOR),
+                    (COIN_GAME_TEXT_X, COIN_GAME_Y))
+
+        coin = pygame.image.load(COIN_PATH)
+        coin = pygame.transform.scale(coin, (COIN_WIDTH, COIN_HEIGHT))
+        screen.blit(coin, (COIN_GAME_IMAGE_X, COIN_GAME_Y))
+
         # Display the pause button
         pause_btn.display_button()
 
@@ -119,16 +141,23 @@ def game(data, img, clock, score=0, hearts=3):
         heart_3.display_button()
 
         # display the bars
-        railing.create_bar()
-        railing.bar_join(player.get_current_score())
+        railing.create_object()
+        railing.object_join(player.get_current_score())
 
-        stairs.create_bar()
-        stairs.bar_join(player.get_current_score())
+        stairs.create_object()
+        stairs.object_join(player.get_current_score())
 
-        bird.create_bar()
-        bird.bar_join(player.get_current_score())
+        bird.create_object()
+        bird.object_join(player.get_current_score())
 
-        # Start the moving of the railing
+        heart_award.create_object()
+        heart_award.object_join(player.get_current_score())
+
+        coin_award.create_object()
+        coin_award.object_join(player.get_current_score())
+
+
+        # check if no moving bar
         if not railing.moving and not stairs.moving and not bird.moving:
             # Random bar to join the screen
             bar = random.choice(bars)
@@ -140,6 +169,21 @@ def game(data, img, clock, score=0, hearts=3):
             bar.moving = True
             bar.check = False
             moving_bar = bar
+
+        # check if no award moving on the screen
+        if not heart_award.moving and not coin_award.moving:
+            if moving_bar.x < (WINDOW_WIDTH-moving_bar.width)-500:
+                # If the player had 3 hearts - only coin can join
+                if player.hearts == 3:
+                    award = coin_award
+                else:
+                    award = random.choice(awards)
+
+                # New bar - need reset to fields
+                award.moving = True
+                award.check = False
+                moving_award = award
+
 
         # Check if user pass the bar
         if moving_bar:
@@ -154,15 +198,38 @@ def game(data, img, clock, score=0, hearts=3):
                             data["best_score"] = int(player.current_score)
                             write_data(data)
                         # Add coins to the player
-                        add_coins(data, player.current_score)
+                        add_coins(data, player.coins)
                         # Display game over screen
 
                         game_over(score=player.current_score,img=img, clock=clock, data=data)
                 # In order not to check the same bar several times
                 moving_bar.check = True
 
+        # Check if user get the award
+        if moving_award:
+            # Check if user claimed the award
+            check = player.claim_check(moving_award)
+            if check is not None:
+                if check:
+                    # If the player claimed the award
+                    if moving_award.type == COIN_AWARD_TYPE:
+                        # Add to the user coins and reset the x
+                        moving_award.x = COIN_AWARD_START_X
+                        player.coins += BIG_COIN_VALUE
+                    else:
+                        # Add heart to the user hearts and reset the x
+                        moving_award.x = HEART_AWARD_START_X
+                        player.hearts += 1
+                        player.hearts_check(heart_1, heart_2, heart_3)
+
+                # In order not to check the same object several times
+                moving_award.check = True
+
         # Add score to the player
         player.add_score()
+
+        # Add coins
+        player.add_coins(DEFAULT_COIN_VALUE)
 
         # Check if user reach new best score
         if (player.current_score > player.best_score) and (player.best_score > 0):
@@ -173,6 +240,7 @@ def game(data, img, clock, score=0, hearts=3):
         clock.tick(30)
 
 def home(img, clock, data):
+    """Home screen (landing screen)"""
     # Display the background, presented Image, likes, comments, tags and
     # location(on the Image)
     screen.blit(img, (0, 0))
@@ -303,7 +371,7 @@ def home(img, clock, data):
         clock.tick(30)
 
 def shop(img, clock, data):
-
+    """Shop screen"""
     # Create buttons
     home_btn = Button(pygame.image.load(HOME_PATH), "home", HOME_ID, HOME_X, HOME_Y, HOME_WIDTH, HOME_HEIGHT)
 
@@ -422,7 +490,8 @@ def shop(img, clock, data):
 
         clock.tick(30)
 
-def pause(score, hearts, img, clock, data):
+def pause(score, hearts, img, clock, data, coins):
+    """Pause screen"""
     # Display the background, presented Image, likes, comments, tags and
     # location(on the Image)
     screen.blit(img, (0, 0))
@@ -447,7 +516,7 @@ def pause(score, hearts, img, clock, data):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 pos = event.pos
                 if mouse_in_object(resume, pos):
-                    game(score=score, hearts=hearts, data=data, img=img, clock=clock)
+                    game(score=score, hearts=hearts, data=data, img=img, clock=clock, coins=coins)
                 elif mouse_in_object(quit_btn, pos):
                     home(img=img, clock=clock, data=data)
         # Update the screen
@@ -457,6 +526,8 @@ def pause(score, hearts, img, clock, data):
         clock.tick(30)
 
 def game_over(score, img, clock, data):
+    """Game over screen"""
+
     # Display the background, presented Image, likes, comments, tags and
     # location(on the Image)
     screen.blit(img, (0, 0))
