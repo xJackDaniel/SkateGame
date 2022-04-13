@@ -26,4 +26,5 @@ def main():
     # Display home screen
     home(img, clock, data)
 
+
 main()
