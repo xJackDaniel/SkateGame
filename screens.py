@@ -14,7 +14,7 @@ def game(data, img, clock, score=0, hearts=3, coins=0):
     """Game screen"""
     # Create the character
     character, character_num = equipped_character()
-    player = Player(hearts, f"{CHARACTER_PATH}{character}.png", data.get(BEST_SCORE), score, coins)
+    player = Player(hearts, character_num, f"{CHARACTER_PATH}{character}.png", data.get(BEST_SCORE), score, coins)
     # Create pause button
     pause_btn = Button(pygame.image.load(PAUSE_PATH), None, PAUSE_PATH, PAUSE_X_POS, PAUSE_Y_POS, PAUSE_WIDTH, PAUSE_HEIGHT)
 
@@ -78,13 +78,27 @@ def game(data, img, clock, score=0, hearts=3, coins=0):
                 pos = event.pos
                 if mouse_in_object(pause_btn, pos):
                     pause(score=player.current_score, hearts=player.hearts, img=img, clock=clock, data=data, coins=player.coins)
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c:
+                    owned_characters, equipped = get_owned_characters()
+                    if len(owned_characters) > 1:
+                        index_current = owned_characters.index(equipped)
+                        next_char = owned_characters[(index_current + 1) % len(owned_characters)]
+                        player.set_new_character(next_char[-1])
+                        equipe_character(next_char[-1], data)
+
 
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_DOWN]:
                 if not player.down and player.jump is False:
                     player.get_down()
+
+
             elif player.down:
                 player.reset_player()
+
+
+
 
             if player.jump is False and pressed[pygame.K_UP]:
                 player.jump = True

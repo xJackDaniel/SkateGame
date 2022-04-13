@@ -57,7 +57,7 @@ def equipe_character(character_num, data):
         if (data.get(f"character_{char+1}") == CHARACTER_EQUIPPED) and (char+1 != character_num):
             # Unequipe the old character
            data[f"character_{char+1}"] = CHARACTER_OWN
-        elif char+1 == character_num:
+        if char+1 == int(character_num):
             # Equipe the new character
             data[f"character_{char + 1}"] = CHARACTER_EQUIPPED
     write_data(data)
@@ -72,6 +72,19 @@ def character_own(num):
     else:
         return False
 
+def get_owned_characters():
+    """Return all the owned characters"""
+    data = read_data()
+    owned = []
+    equipped = None
+    for char in range(CHARACTERS_AMOUNT):
+        char_number = char + 1
+        if data.get(f"character_{char_number}") == CHARACTER_OWN:
+            owned.append(f"character_{char_number}")
+        elif data.get(f"character_{char_number}") == CHARACTER_EQUIPPED:
+            equipped = f"character_{char_number}"
+            owned.append(f"character_{char_number}")
+    return owned, equipped
 
 def add_coins(data, coins):
     """Add coins to user's data"""

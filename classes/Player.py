@@ -3,9 +3,10 @@ import pygame
 from constants import *
 
 class Player:
-    def __init__(self, hearts, skin, best_score, current_score, coins):
+    def __init__(self, hearts, character_num, skin, best_score, current_score, coins):
         self.hearts = hearts
         self.skin = skin
+        self.character_num = character_num
         self.best_score = best_score
         self.current_score = current_score
         self.down = False
@@ -45,6 +46,14 @@ class Player:
     def get_height(self):
         """Returns the player's character height"""
         return self.height
+
+    def set_new_character(self, num):
+        """Set new character skin"""
+        self.skin = f"{CHARACTER_PATH}Character{num}.png"
+        self.character_img = pygame.image.load(self.skin)
+        self.character_num = num
+
+
 
     def display_player(self):
         """Display the player character on the screen"""
