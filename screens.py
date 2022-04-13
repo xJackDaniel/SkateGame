@@ -204,6 +204,12 @@ def game(data, img, clock, score=0, hearts=3, coins=0):
             check = player.check_pass(moving_bar, heart_1, heart_2, heart_3)
             if check is not None:
                 if check is False:
+                    # Punch sound
+                    punch_sound = pygame.mixer.Sound(PUNCH_SOUND)
+                    pygame.mixer.Sound.play(punch_sound)
+                    pygame.mixer.music.stop()
+                    # If the user don't pass the bar - need to blink the character
+                    player.blink = True
                     # If the user don't pass the bar - need to check his hearts
                     if player.hearts == 0:
                         # The user reached 0 hearts - end of the game
@@ -213,6 +219,10 @@ def game(data, img, clock, score=0, hearts=3, coins=0):
                             write_data(data)
                         # Add coins to the player
                         add_coins(data, player.coins)
+                        # game over sound
+                        game_over_sound = pygame.mixer.Sound(GAMEOVER_SOUND)
+                        pygame.mixer.Sound.play(game_over_sound)
+                        pygame.mixer.music.stop()
                         # Display game over screen
 
                         game_over(score=player.current_score,img=img, clock=clock, data=data)
@@ -230,6 +240,10 @@ def game(data, img, clock, score=0, hearts=3, coins=0):
                         # Add to the user coins and reset the x
                         moving_award.x = COIN_AWARD_START_X
                         player.coins += BIG_COIN_VALUE
+                        # Coin sound
+                        coin_sound = pygame.mixer.Sound(COIN_SOUND)
+                        pygame.mixer.Sound.play(coin_sound)
+                        pygame.mixer.music.stop()
                     else:
                         # Add heart to the user hearts and reset the x
                         moving_award.x = HEART_AWARD_START_X
@@ -244,6 +258,10 @@ def game(data, img, clock, score=0, hearts=3, coins=0):
 
         # Add coins
         player.add_coins(DEFAULT_COIN_VALUE)
+
+        # If the blink is true - need to run the function of blinks
+        if player.blink:
+            player.glowing_character()
 
         # Check if user reach new best score
         if (player.current_score > player.best_score) and (player.best_score > 0):
@@ -285,7 +303,7 @@ def home(img, clock, data):
 
     # Display the logo
     logo_font = pygame.font.SysFont("Arial", LOGO_SIZE)
-    screen.blit(logo_font.render("SkateGame", True, COIN_COLOR),
+    screen.blit(logo_font.render("StreetSkater", True, COIN_COLOR),
                 (LOGO_TEXT_X, LOGO_Y))
 
     logo = pygame.image.load(LOGO_PATH)

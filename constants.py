@@ -4,6 +4,13 @@ START_HEARTS = 3
 ERROR_COLOR = (255, 0, 0)
 SUCCESS_COLOR = (76, 153, 0)
 
+# Sounds
+COIN_SOUND = "sounds/coin.mp3"
+JUMP_SOUND = "sounds/jump.mp3"
+PUNCH_SOUND = "sounds/punch.mp3"
+GAMEOVER_SOUND = "sounds/game-over.mp3"
+
+
 # Coin value
 DEFAULT_COIN_VALUE = 1
 BIG_COIN_VALUE = 50

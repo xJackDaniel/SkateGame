@@ -5,7 +5,7 @@ def main():
     pygame.init()
 
     # Change the title and icon of the window
-    pygame.display.set_caption('SkateGame')
+    pygame.display.set_caption('StreetSkater')
     pygame.display.set_icon(pygame.image.load(LOGO_PATH))
 
     global clock
