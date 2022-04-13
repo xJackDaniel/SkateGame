@@ -362,6 +362,14 @@ def home(img, clock, data):
     bonus_coin = pygame.transform.scale(bonus_coin, (BONUS_COIN_WIDTH, BONUS_COIN_HEIGHT))
     screen.blit(bonus_coin, (BONUS_COIN_X, BONUS_COIN_Y))
 
+    # Display the Text explanation of the character changer
+    char_changer_font = pygame.font.SysFont("Arial", 15)
+    screen.blit(char_changer_font.render(CHAR_CHANGER_INFO, True, CHAR_CHANGER_INFO_COLOR), (CHAR_CHANGER_INFO_X, CHAR_CHANGER_INFO_Y))
+
+    # Display the 'C' keyboard button
+    c_button = pygame.image.load(C_BUTTON_PATH)
+    c_button = pygame.transform.scale(c_button, (C_BUTTON_WIDTH, C_BUTTON_HEIGHT))
+    screen.blit(c_button, (C_BUTTON_X, C_BUTTON_Y))
 
     running = True
     while running:

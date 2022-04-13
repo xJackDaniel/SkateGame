@@ -264,19 +264,20 @@ COLOR_RECT = (255, 255, 255)
 X_RECT = 480
 Y_RECT = 200
 WIDTH_RECT = 590
-HEIGHT_RECT = 310
+HEIGHT_RECT = 370
 
 # A black layer of our rectangle which will be displayed behind it.
 X_FRAME = 470
 Y_FRAME = 190
 WIDTH_FRAME = 610
-HEIGHT_FRAME = 330
+HEIGHT_FRAME = 390
 
 # The title inside the rectangle
 TITLE_INFO_TEXT = "Tips and Help:"
 TITLE_INFO_COLOR = (0, 0, 0)
 TITLE_INFO_X = 655
 TITLE_INFO_Y = 200
+
 # Text explanation on how to avoid the bird
 BIRD_INFO_X_POS = 555
 BIRD_INFO_Y_POS = 250
@@ -357,3 +358,16 @@ BONUS_COIN_WIDTH = 50
 BONUS_COIN_HEIGHT = 50
 BONUS_COIN_X = 490
 BONUS_COIN_Y = 460
+
+# Character changer button text info
+CHAR_CHANGER_INFO = " - Using the 'c' button on your keyboard, you can change your character while playing."
+CHAR_CHANGER_INFO_X = 555
+CHAR_CHANGER_INFO_Y = 520
+CHAR_CHANGER_INFO_COLOR = (0, 0, 0)
+
+# C button image on keyboard
+C_BUTTON_PATH = "images/Arrow_buttons/C_button_keyboard.png"
+C_BUTTON_WIDTH = 50
+C_BUTTON_HEIGHT = 50
+C_BUTTON_X = 490
+C_BUTTON_Y = 510
