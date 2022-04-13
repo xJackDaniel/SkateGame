@@ -80,8 +80,9 @@ class Player:
             # Check if the bar is found on the player
             if (self.x <= object.x) and ((self.x + CHARACTER_WIDTH) >= object.x):
                 if object.jump:
-                    # If the user needs to jump in this bar - check jump
+                    # If the user needs to jump in this bar - check jump + make the character blink
                     if self.jump is False:
+                        self.glowing_character()
                         self.hearts -= 1
                         # If the user didn't jump - remove heart
                         self.hearts_check(heart_1, heart_2, heart_3)
@@ -89,7 +90,8 @@ class Player:
                 else:
                     # If the user needs to get down in this bar - check down
                     if self.down is False:
-                        # If the user didn't get down - remove heart
+                        # If the user didn't get down - remove heart + make the character blink.
+                        self.glowing_character()
                         self.hearts -= 1
                         self.hearts_check(heart_1, heart_2, heart_3)
                     return self.down
@@ -126,4 +128,13 @@ class Player:
             heart_1.x = HEART_X_OUT
             heart_2.x = HEART_X_OUT
             heart_3.x = HEART_X_OUT
+
+    def glowing_character(self):
+        """makes the character blink"""
+        current_skin = self.get_skin()
+        for i in range(60):
+            self.skin = None
+            pygame.display.flip()
+            self.skin = current_skin
+            pygame.display.flip()
 
