@@ -17,6 +17,8 @@ class Player:
         self.character_img = pygame.image.load(skin)
         self.jump_count = JUMP_COUNT
         self.coins = coins
+        self.blink = False
+        self.blinkCount = 30
 
 
     def get_hearts(self):
@@ -75,12 +77,17 @@ class Player:
 
     def player_jump(self):
         """ The character jumping over"""
+
         if self.jump_count >= -10:
             self.y -= (self.jump_count * abs(self.jump_count)) * 0.5
             self.jump_count -= 1
         else:
             self.jump_count = 10
             self.jump = False
+        # Jump sound
+        jump_sound = pygame.mixer.Sound(JUMP_SOUND)
+        pygame.mixer.Sound.play(jump_sound)
+        pygame.mixer.music.stop()
 
     def check_pass(self, object, heart_1, heart_2, heart_3):
         """Checks if player pass the object"""
@@ -91,7 +98,6 @@ class Player:
                 if object.jump:
                     # If the user needs to jump in this bar - check jump + make the character blink
                     if self.jump is False:
-                        self.glowing_character()
                         self.hearts -= 1
                         # If the user didn't jump - remove heart
                         self.hearts_check(heart_1, heart_2, heart_3)
@@ -100,7 +106,6 @@ class Player:
                     # If the user needs to get down in this bar - check down
                     if self.down is False:
                         # If the user didn't get down - remove heart + make the character blink.
-                        self.glowing_character()
                         self.hearts -= 1
                         self.hearts_check(heart_1, heart_2, heart_3)
                     return self.down
@@ -139,11 +144,15 @@ class Player:
             heart_3.x = HEART_X_OUT
 
     def glowing_character(self):
-        """makes the character blink"""
-        current_skin = self.get_skin()
-        for i in range(60):
-            self.skin = None
-            pygame.display.flip()
-            self.skin = current_skin
-            pygame.display.flip()
-
+        """Makes the character blink"""
+        if self.blinkCount >= 0 and self.blink:
+            if self.blinkCount % 2 == 0:
+                # Return the character to base
+                self.character_img = pygame.image.load(self.skin)
+            else:
+                # Set alpha to the character
+                self.character_img.set_alpha(128)
+            self.blinkCount -= 1
+        else:
+            self.blinkCount = 10
+            self.blink = False
